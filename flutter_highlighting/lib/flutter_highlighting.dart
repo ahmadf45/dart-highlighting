@@ -101,7 +101,7 @@ class HighlightView extends StatelessWidget {
                       child: GestureDetector(
                         onTap: ()async{
                           await Clipboard.setData(ClipboardData(text: "your text"));
-                        }
+                        },
                         child: Icon(Icons.copy),
                       ),
                     ),
