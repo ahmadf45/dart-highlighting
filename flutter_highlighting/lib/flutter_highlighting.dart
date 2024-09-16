@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:highlighting/highlighting.dart';
 
@@ -88,16 +89,39 @@ class HighlightView extends StatelessWidget {
     }
 
     return Container(
-      color: theme[_rootKey]?.backgroundColor ?? _defaultBackgroundColor,
-      padding: padding,
-      child: RichText(
-        text: TextSpan(
-          style: _textStyle,
-          children: _convert(
-            highlight.highlight(languageId ?? '', source, true).nodes ?? [],
-          ),
-        ),
-      ),
-    );
+              color:
+                  theme[_rootKey]?.backgroundColor ?? _defaultBackgroundColor,
+              padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: ()async{
+                          await Clipboard.setData(ClipboardData(text: "your text"));
+                        }
+                        child: Icon(Icons.copy),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: RichText(
+                      text: TextSpan(
+                        style: _textStyle,
+                        children: _convert(
+                          highlight
+                                  .highlight(languageId ?? '', source, true)
+                                  .nodes ??
+                              [],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
   }
 }
